@@ -213,4 +213,4 @@ MIT License — see [LICENSE](LICENSE) for details.
 
 ## Author
 
-**Sai Sandeep** — Built with ❤️ for Kubernetes network security.
+**sanjaysundarmurthy** — Built with ❤️ for Kubernetes network security.
