@@ -1,10 +1,8 @@
 """NetworkPolicy validator — 50+ rules for security, correctness, and best practices."""
 import re
 from collections import Counter
-from typing import Optional
 
 from kube_netpol.models import Issue, NetworkPolicy, Severity
-
 
 # RFC 1918 private ranges
 PRIVATE_CIDRS = [
@@ -420,7 +418,6 @@ def _check_port_rules(pol: NetworkPolicy, issues: list):
 def _check_labels_annotations(pol: NetworkPolicy, issues: list):
     """Check labels and annotations best practices."""
     # KNP-026: Missing standard labels
-    standard_labels = ["app.kubernetes.io/name", "app.kubernetes.io/part-of"]
     if pol.labels:
         has_standard = any(k.startswith("app.kubernetes.io/") for k in pol.labels)
         if not has_standard:

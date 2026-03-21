@@ -1,5 +1,4 @@
 """Shared test fixtures for kube-netpol."""
-import os
 import pytest
 
 

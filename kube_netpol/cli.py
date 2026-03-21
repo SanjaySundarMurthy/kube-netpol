@@ -1,20 +1,19 @@
 """kube-netpol CLI — Kubernetes NetworkPolicy generator, validator & visualizer."""
-import sys
 import os
+import sys
 
 import click
 from rich.console import Console
 
 from kube_netpol import __version__
+from kube_netpol.analyzers.simulator import simulate_traffic
+from kube_netpol.analyzers.validator import validate_policies
+from kube_netpol.generators.policy_generator import TEMPLATES, generate_policy, list_templates
 from kube_netpol.models import AnalysisReport, Severity, TrafficFlow
 from kube_netpol.parser import parse_manifests
-from kube_netpol.analyzers.validator import validate_policies
-from kube_netpol.analyzers.simulator import simulate_traffic
-from kube_netpol.generators.policy_generator import generate_policy, list_templates, TEMPLATES
-from kube_netpol.reporters.visualizer import build_connections, generate_mermaid
+from kube_netpol.reporters.export_reporter import export_html, export_json
 from kube_netpol.reporters.terminal_reporter import print_report
-from kube_netpol.reporters.export_reporter import export_json, export_html
-
+from kube_netpol.reporters.visualizer import build_connections
 
 # Fix Windows console encoding
 if sys.platform == "win32":
@@ -169,12 +168,12 @@ def simulate(path, source_pod, source_ns, source_labels, dest_pod, dest_ns, dest
     results = simulate_traffic(policies, [flow])
     result = results[0]
 
-    from kube_netpol.models import VERDICT_ICONS, VERDICT_COLORS
+    from kube_netpol.models import VERDICT_COLORS, VERDICT_ICONS
     icon = VERDICT_ICONS[result.verdict]
     color = VERDICT_COLORS[result.verdict]
 
     console.print()
-    console.print(f"  [bold]Traffic Flow:[/bold]")
+    console.print("  [bold]Traffic Flow:[/bold]")
     console.print(f"    Source: [cyan]{source_pod}[/cyan] (ns:{source_ns}) labels={src_lbl}")
     console.print(f"    Dest:   [cyan]{dest_pod}[/cyan] (ns:{dest_ns}) labels={dst_lbl}")
     console.print(f"    Port:   {port or 'any'}/{protocol}")
@@ -203,7 +202,7 @@ def templates():
 
     console.print()
     console.print(table)
-    console.print(f"\n[dim]  Usage: kube-netpol generate <template-name> --namespace <ns>[/dim]\n")
+    console.print("\n[dim]  Usage: kube-netpol generate <template-name> --namespace <ns>[/dim]\n")
 
 
 # ─── visualize ──────────────────────────────────────────────────────────────
@@ -283,7 +282,6 @@ def demo(verbose):
 def rules():
     """List all validation rules."""
     from rich.table import Table
-    from kube_netpol.analyzers.validator import DANGEROUS_PORTS
 
     table = Table(title="📏 Validation Rules", show_lines=True, padding=(0, 1))
     table.add_column("Rule ID", style="bold cyan", width=10)
@@ -327,7 +325,7 @@ def rules():
         ("KNP-034", "HIGH", "SSH port (22) exposed from 0.0.0.0/0"),
     ]
 
-    from kube_netpol.models import SEVERITY_ICONS, SEVERITY_COLORS
+    from kube_netpol.models import SEVERITY_COLORS, SEVERITY_ICONS
     for rule_id, sev_str, desc in rule_defs:
         sev = Severity(sev_str.lower())
         icon = SEVERITY_ICONS[sev]

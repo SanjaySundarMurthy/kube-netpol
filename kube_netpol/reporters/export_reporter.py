@@ -1,10 +1,19 @@
 """JSON & HTML export reporters for kube-netpol."""
 import json
 from datetime import datetime, timezone
-from collections import Counter
 
 from kube_netpol.models import AnalysisReport, Severity, TrafficVerdict
 
+
+def _traffic_sim_section(flows_rows: str) -> str:
+    """Build traffic simulation section if flows exist."""
+    if not flows_rows:
+        return ""
+    return (
+        "<h2>🧪 Traffic Simulation</h2><div class='card'><table>"
+        "<thead><tr><th>Source</th><th></th><th>Destination</th><th>Port</th><th>Verdict</th><th>Reason</th></tr></thead>"
+        f"<tbody>{flows_rows}</tbody></table></div>"
+    )
 
 def export_json(report: AnalysisReport, output_path: str):
     """Export report as JSON."""
@@ -218,10 +227,10 @@ def export_html(report: AnalysisReport, output_path: str):
             </table>
         </div>
 
-        {"<h2>🧪 Traffic Simulation</h2><div class='card'><table><thead><tr><th>Source</th><th></th><th>Destination</th><th>Port</th><th>Verdict</th><th>Reason</th></tr></thead><tbody>" + flows_rows + "</tbody></table></div>" if flows_rows else ""}
+        {_traffic_sim_section(flows_rows)}
 
         <div class="footer">
-            kube-netpol v1.0.0 &bull; 50+ rules &bull; 10 templates &bull; Made with ❤️ for K8s security
+            kube-netpol v1.0.0 &bull; 34+ rules &bull; 10 templates &bull; Made with ❤️ for K8s security
         </div>
     </div>
     <script>mermaid.initialize({{startOnLoad:true, theme:'dark'}});</script>

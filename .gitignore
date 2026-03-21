@@ -8,6 +8,11 @@ build/
 .eggs/
 *.whl
 *.tar.gz
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
 
 # Virtual environments
 venv/

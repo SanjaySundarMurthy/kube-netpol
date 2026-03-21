@@ -1,9 +1,6 @@
 """NetworkPolicy generator — create policies from templates and workload analysis."""
 import yaml
 
-from kube_netpol.models import NetworkPolicy
-
-
 # Template library for common patterns
 TEMPLATES = {
     "default-deny-ingress": {

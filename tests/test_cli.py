@@ -1,5 +1,6 @@
 """Tests for kube-netpol CLI commands."""
 from click.testing import CliRunner
+
 from kube_netpol.cli import main
 
 

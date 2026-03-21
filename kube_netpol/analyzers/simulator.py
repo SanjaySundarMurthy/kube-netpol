@@ -1,5 +1,5 @@
 """Traffic simulator — simulate traffic flows against NetworkPolicies."""
-from kube_netpol.models import NetworkPolicy, TrafficFlow, TrafficVerdict
+from kube_netpol.models import TrafficFlow, TrafficVerdict
 
 
 def simulate_traffic(policies: list, flows: list) -> list:
@@ -83,7 +83,7 @@ def _check_ingress(policies: list, flow: TrafficFlow):
                 if _port_matches(ports, flow.port, flow.protocol):
                     return TrafficVerdict.ALLOW, f"Allowed by '{pol.name}'"
 
-    return TrafficVerdict.DENY, f"No ingress rule allows this traffic"
+    return TrafficVerdict.DENY, "No ingress rule allows this traffic"
 
 
 def _check_egress(policies: list, flow: TrafficFlow):
@@ -98,7 +98,7 @@ def _check_egress(policies: list, flow: TrafficFlow):
                 if _port_matches(ports, flow.port, flow.protocol):
                     return TrafficVerdict.ALLOW, f"Allowed by '{pol.name}'"
 
-    return TrafficVerdict.DENY, f"No egress rule allows this traffic"
+    return TrafficVerdict.DENY, "No egress rule allows this traffic"
 
 
 def _selector_matches(selector: dict, labels: dict) -> bool:

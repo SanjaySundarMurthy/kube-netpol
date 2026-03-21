@@ -1,17 +1,18 @@
 """Terminal reporter — rich terminal output for kube-netpol."""
-from collections import Counter
-
 from rich.console import Console
 from rich.panel import Panel
+from rich.rule import Rule
 from rich.table import Table
 from rich.text import Text
-from rich.rule import Rule
 
 from kube_netpol.models import (
-    AnalysisReport, Severity, TrafficVerdict,
-    SEVERITY_COLORS, SEVERITY_ICONS, VERDICT_COLORS, VERDICT_ICONS,
+    SEVERITY_COLORS,
+    SEVERITY_ICONS,
+    VERDICT_COLORS,
+    VERDICT_ICONS,
+    AnalysisReport,
+    Severity,
 )
-
 
 GRADE_COLORS = {
     "A+": "bright_green", "A": "green", "A-": "green",
@@ -92,7 +93,7 @@ def _print_score(report: AnalysisReport, console: Console):
     score_text = Text()
     score_text.append("  Security Score: ", style="bold")
     score_text.append(f"{report.score}", style=f"bold {grade_color}")
-    score_text.append(f" / 100", style="dim")
+    score_text.append(" / 100", style="dim")
     score_text.append("    Grade: ", style="bold")
     score_text.append(f" {report.grade} ", style=f"bold white on {grade_color}")
 
@@ -305,5 +306,5 @@ def _print_footer(report: AnalysisReport, console: Console):
     else:
         console.print(f"[yellow]  💡 {total} suggestion(s) to improve network security.[/yellow]")
 
-    console.print(f"[dim]  kube-netpol v1.0.0 | 50+ rules | 10 templates | Made with ❤️  for K8s security[/dim]")
+    console.print("[dim]  kube-netpol v1.0.0 | 34+ rules | 10 templates | Made with ❤️  for K8s security[/dim]")
     console.print()

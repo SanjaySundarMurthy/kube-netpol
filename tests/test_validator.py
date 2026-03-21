@@ -1,6 +1,6 @@
 """Tests for kube-netpol policy validator."""
-from kube_netpol.parser import parse_manifests
 from kube_netpol.analyzers.validator import validate_policies
+from kube_netpol.parser import parse_manifests
 
 
 class TestValidatePolicies:

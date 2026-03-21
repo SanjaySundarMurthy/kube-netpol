@@ -1,5 +1,5 @@
 """Tests for kube-netpol policy generator."""
-from kube_netpol.generators.policy_generator import generate_policy, list_templates, TEMPLATES
+from kube_netpol.generators.policy_generator import TEMPLATES, generate_policy, list_templates
 
 
 class TestGeneratePolicy:

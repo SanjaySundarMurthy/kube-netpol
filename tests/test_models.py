@@ -1,7 +1,12 @@
 """Tests for kube-netpol data models."""
 from kube_netpol.models import (
-    Severity, PolicyType, TrafficVerdict,
-    Issue, NetworkPolicy, TrafficFlow, PolicyConnection, AnalysisReport,
+    AnalysisReport,
+    Issue,
+    NetworkPolicy,
+    PolicyType,
+    Severity,
+    TrafficFlow,
+    TrafficVerdict,
 )
 
 

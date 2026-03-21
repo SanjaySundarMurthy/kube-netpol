@@ -1,7 +1,7 @@
 """Visualizer — generates Mermaid diagrams and connection maps for NetworkPolicies."""
 from collections import defaultdict
 
-from kube_netpol.models import NetworkPolicy, PolicyConnection
+from kube_netpol.models import PolicyConnection
 
 
 def build_connections(policies: list, workloads: list) -> list:
@@ -15,7 +15,6 @@ def build_connections(policies: list, workloads: list) -> list:
         for rule in pol.ingress_rules:
             from_peers = rule.get("from", [])
             ports = rule.get("ports", [])
-            port_str = _format_ports(ports)
 
             for peer in from_peers:
                 source = _describe_peer(peer, pol.namespace, "source")
@@ -105,7 +104,7 @@ def generate_mermaid(policies: list, workloads: list) -> str:
 
     # Define node shapes
     for label, nid in node_ids.items():
-        if nid in used_nodes and not any(f'    {nid}["' in l or f"    {nid}[" in l for l in lines):
+        if nid in used_nodes and not any(f'    {nid}["' in line or f"    {nid}[" in line for line in lines):
             if "🌐" in label or "External" in label or "0.0.0.0" in label:
                 lines.insert(5, f'    {nid}["{label}"]:::external')
             elif "ns:" in label:

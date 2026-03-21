@@ -1,7 +1,7 @@
 """Tests for kube-netpol traffic simulator."""
+from kube_netpol.analyzers.simulator import simulate_traffic
 from kube_netpol.models import TrafficFlow, TrafficVerdict
 from kube_netpol.parser import parse_manifests
-from kube_netpol.analyzers.simulator import simulate_traffic
 
 
 class TestSimulateTraffic:
