@@ -1,4 +1,8 @@
-# kube-netpol
+﻿# kube-netpol
+
+[![CI](https://github.com/SanjaySundarMurthy/kube-netpol/actions/workflows/ci.yml/badge.svg)](https://github.com/SanjaySundarMurthy/kube-netpol/actions/workflows/ci.yml)
+[![Python](https://img.shields.io/pypi/pyversions/kube-netpol)](https://pypi.org/project/kube-netpol/)
+[![PyPI](https://img.shields.io/pypi/v/kube-netpol)](https://pypi.org/project/kube-netpol/)
 
 **Kubernetes NetworkPolicy Generator, Validator & Visualizer**
 
@@ -28,7 +32,7 @@ Kubernetes NetworkPolicies are the firewall of your cluster — but they're noto
 ## Installation
 
 ```bash
-pip install -e .
+pip install kube-netpol
 ```
 
 Or directly from the repository:
@@ -36,7 +40,7 @@ Or directly from the repository:
 ```bash
 git clone https://github.com/SanjaySundarMurthy/kube-netpol.git
 cd kube-netpol
-pip install -e .
+pip install kube-netpol
 ```
 
 ---
@@ -214,3 +218,50 @@ MIT License — see [LICENSE](LICENSE) for details.
 ## Author
 
 **sanjaysundarmurthy** — Built with ❤️ for Kubernetes network security.
+
+
+## 🐳 Docker
+
+Run without installing Python:
+
+```bash
+# Build the image
+docker build -t kube-netpol .
+
+# Run
+docker run --rm kube-netpol --help
+
+# Example with volume mount
+docker run --rm -v ${PWD}:/workspace kube-netpol [command] /workspace
+```
+
+Or pull from the container registry:
+
+```bash
+docker pull ghcr.io/SanjaySundarMurthy/kube-netpol:latest
+docker run --rm ghcr.io/SanjaySundarMurthy/kube-netpol:latest --help
+```
+
+## 🤝 Contributing
+
+Contributions are welcome! Here's how:
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/amazing-feature`
+3. Commit changes: `git commit -m 'Add amazing feature'`
+4. Push to branch: `git push origin feature/amazing-feature`
+5. Open a Pull Request
+
+Please ensure tests pass before submitting:
+
+```bash
+pip install kube-netpol
+pytest -v
+ruff check .
+```
+
+## 🔗 Links
+
+- **PyPI**: [https://pypi.org/project/kube-netpol/](https://pypi.org/project/kube-netpol/)
+- **GitHub**: [https://github.com/SanjaySundarMurthy/kube-netpol](https://github.com/SanjaySundarMurthy/kube-netpol)
+- **Issues**: [https://github.com/SanjaySundarMurthy/kube-netpol/issues](https://github.com/SanjaySundarMurthy/kube-netpol/issues)
